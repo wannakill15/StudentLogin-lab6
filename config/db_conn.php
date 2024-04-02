@@ -10,7 +10,7 @@ $uname= "root";
 $password = "";
 
 // name of the database
-$db_name = "ipt101";
+$db_name = "studentinfo";
 
 // Establishin connection to the MySQL database
 $conn = mysqli_connect($sname, $uname, $password, $db_name);
