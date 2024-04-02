@@ -61,23 +61,23 @@
             <a href="pages/calendar.html" class="nav-link">
               <i class="nav-icon far fa-user"></i>
               <p>
-                Admin
+                Profile
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-check-circle"></i>
+              <p>
+                Enroll Subject
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="regisform.php" class="nav-link">
-              <i class="nav-icon fa fa-users"></i>
+              <i class="nav-icon fa fa-book"></i>
               <p>
-                Registered User
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/kanban.html" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>
-                Kanban Board
+                Subjects
               </p>
             </a>
           </li>
