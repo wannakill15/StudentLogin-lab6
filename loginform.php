@@ -8,16 +8,18 @@ if(isset($_SESSION['auth']))
     exit(0);
 }
 
-
-
-$permissions = ['email']; // Optional permissions
-
-
-
 ?>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <div class="section">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div class="section">
         <div class="container">
             <div class="row justify-content-center">
                 
@@ -56,10 +58,8 @@ $permissions = ['email']; // Optional permissions
                                         <input type="password" name="password" class="form-control" placeholder="Password" required>
                                     </div>
 
-                                    <hr>
-
-                                    <div class="modal-footer">
-                                        <button type="submit" name="login_btn" class="btn btn-primary btn-block">Login</button>
+                                    <div class="modal-footer h-100">
+                                        <button type="submit" name="login_btn" class="btn btn-success btn-block">Login</button>
                                     </div> 
                             </form>
                             <div class="text-center ">
@@ -71,6 +71,10 @@ $permissions = ['email']; // Optional permissions
             </div>
         </div>
     </div>
+</body>
+</html>
+
+    
 
 <?php 
 include('includes/script.php'); 
