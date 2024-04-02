@@ -15,7 +15,7 @@ if(isset($_SESSION['auth']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
@@ -26,7 +26,7 @@ if(isset($_SESSION['auth']))
                 <div class="col-md-5 my-5">
                     <div class="card my-5">
                         <div class="card-header bg-light">
-                            <h5>Login Form</5>
+                            <h5>Student Login</5>
                         </div>
                         <div class="card-body">
                             <?php
@@ -48,14 +48,14 @@ if(isset($_SESSION['auth']))
                             ?>
                             <form action="logincode.php" method="POST">
                                     <div class="form-group">
-                                        <label for="">Email</label>
+                                        <label for="student_id">Student ID</label>
                                         <span></span>
-                                        <input type="text" name="email" class="form-control" placeholder="Email" required>
+                                        <input type="text" name="student_id" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="">Password</label>
-                                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                        <input type="password" name="password" class="form-control" required>
                                     </div>
 
                                     <div class="modal-footer h-100">
