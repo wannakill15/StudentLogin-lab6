@@ -49,10 +49,7 @@ include('includes/header.php');
                                         <span id="password_message" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="profile_picture">Profile Picture</label>
-                                    <input type="file" id="prof_pic" name="prof_pic" class="form-control-file">
-                                </div>
+                                
                                 <div class="form-group">
                                     <input type="hidden" name="Status" class="form-control">
                                     <input type="hidden" name="Active" class="form-control">

@@ -21,20 +21,10 @@ if (isset($_POST['signup_btn'])) {
     $email = validate($_POST['email']);
     $password = validate($_POST['password']);
     $full_name = validate($_POST['full_name']);
-    $first_name = validate($_POST['phone_number']);
-    $last_name = validate($_POST['address']);
-    $prof_pic = $_FILES['profile_picture']['name']; // Original file name
+    $first_name = validate($_POST['first_name']);
+    $last_name = validate($_POST['last_name']);
     $Status = 'Not Verified'; // Set default value
     $Active = 'Not Active'; // Set default value
-
-    $allowed_extension = array('png', 'jpg', 'jpeg');
-    $file_extension = pathinfo($prof_pic, PATHINFO_EXTENSION);
-
-    if (!in_array($file_extension, $allowed_extension)) {
-        $_SESSION['status'] = "You are allowed with only jpg, png, jpeg image";
-        header('Location: signupform.php');
-        exit(0);
-    }
 
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -51,51 +41,86 @@ if (isset($_POST['signup_btn'])) {
     }
 
     // Generate a unique verification token
-    $Token = bin2hex(random_bytes(4));
+    $Token = mt_rand(1000, 9999);
+
+    // Generate a unique id for students containing only integers
+    do {
+        $student_id = mt_rand(1000, 9999); // Generates a random 4-digit integer
+        // Check if the token already exists in the database
+        $sql_check_token = "SELECT * FROM student_regis WHERE Token='$Token'";
+        $result_check_token = mysqli_query($conn, $sql_check_token);
+    } while (mysqli_num_rows($result_check_token) > 0);
 
     // Insert user data into the database
-    $insert_query = "INSERT INTO student_regis (email, password, full_name, first_name, last_name, prof_pic, Status, Active, Token)
-    VALUES ('$full_name', '$email', '$password', '$full_name', '$full_name', '$first_name', '$last_name', '$prof_pic', '$Status', '$Active', '$Token')";
+    $insert_query = "INSERT INTO student_regis (student_id, email, password, full_name, first_name, last_name, Status, Active, Token)
+    VALUES ('$student_id', '$email', '$password', '$full_name', '$first_name', '$last_name', '$Status', '$Active', '$Token')";
     $insert_query_run = mysqli_query($conn, $insert_query);
 
     if ($insert_query_run) {
-
         // Send verification email
-        $subject = "Email Verification";
-        $message = "Hello, $full_name. Your verification code is: $Token";
-
-        // Create a PHPMailer instance
-        $mail = new PHPMailer(true);
-
+        $verification_subject = "Email Verification";
+        $verification_message = "Hello, $full_name. Your verification code is: $Token";
+    
+        // Create a PHPMailer instance for verification email
+        $verification_mail = new PHPMailer(true);
+    
         try {
-            // SMTP configuration
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'cocnambawan@gmail.com'; // Your gmail
-            $mail->Password = 'bkvm sirf keww nswm'; // Your gmail app password
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = 465;
-
-            // Sender and recipient
-            $mail->setFrom('cocnambawan@gmail.com', 'Email Verification');
-            $mail->addAddress($email);
-
-            // Email content
-            $mail->isHTML(true);
-            $mail->Subject = $subject;
-            $mail->Body = $message;
-
-            // Send email
-            $mail->send();
-
+            // SMTP configuration for verification email
+            $verification_mail->isSMTP();
+            $verification_mail->Host = 'smtp.gmail.com';
+            $verification_mail->SMTPAuth = true;
+            $verification_mail->Username = 'cocnambawan@gmail.com'; // Your gmail
+            $verification_mail->Password = 'bkvm sirf keww nswm'; // Your gmail app password
+            $verification_mail->SMTPSecure = 'ssl';
+            $verification_mail->Port = 465;
+    
+            // Sender and recipient for verification email
+            $verification_mail->setFrom('cocnambawan@gmail.com', 'Email Verification');
+            $verification_mail->addAddress($email);
+    
+            // Email content for verification email
+            $verification_mail->isHTML(true);
+            $verification_mail->Subject = $verification_subject;
+            $verification_mail->Body = $verification_message;
+    
+            // Send verification email
+            $verification_mail->send();
+    
+            // Send student ID email
+            $student_id_subject = "Student ID";
+            $student_id_message = "Hello, $full_name. Your student ID is: $student_id";
+    
+            // Create a PHPMailer instance for student ID email
+            $student_id_mail = new PHPMailer(true);
+    
+            // SMTP configuration for student ID email (same as verification email)
+            $student_id_mail->isSMTP();
+            $student_id_mail->Host = 'smtp.gmail.com';
+            $student_id_mail->SMTPAuth = true;
+            $student_id_mail->Username = 'cocnambawan@gmail.com'; // Your gmail
+            $student_id_mail->Password = 'bkvm sirf keww nswm'; // Your gmail app password
+            $student_id_mail->SMTPSecure = 'ssl';
+            $student_id_mail->Port = 465;
+    
+            // Sender and recipient for student ID email
+            $student_id_mail->setFrom('cocnambawan@gmail.com', 'Student ID');
+            $student_id_mail->addAddress($email);
+    
+            // Email content for student ID email
+            $student_id_mail->isHTML(true);
+            $student_id_mail->Subject = $student_id_subject;
+            $student_id_mail->Body = $student_id_message;
+    
+            // Send student ID email
+            $student_id_mail->send();
+    
             // Redirect with a success message
-            $_SESSION['status'] = "Account created successfully. Please check your email for verification.";
-            header('Location: loginform.php');
+            $_SESSION['status'] = "Account created successfully. Please check your email for verification and student ID.";
+            header('Location: verifyForm.php');
             exit();
         } catch (Exception $e) {
-            // Display an error message if the verification email could not be sent
-            $_SESSION['status'] = "Verification email could not be sent. Please try again later.";
+            // Display an error message if any of the emails could not be sent
+            $_SESSION['status'] = "Email(s) could not be sent. Please try again later.";
             header("Location: signupform.php");
             exit();
         }
