@@ -28,7 +28,7 @@
             ?>
           </button>
           <ul class="dropdown-menu">
-            <form action="code.php" method="post">
+            <form action="loginform.php" method="post">
               <button type="submit" class="dropdown-item" name="logoutbtn">Logout</button>
             </form>
           </ul>
