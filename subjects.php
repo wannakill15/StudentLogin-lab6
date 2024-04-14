@@ -119,10 +119,10 @@ include('includes/sidebar.php');
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
+                            <th>Course ID</th>
+                            <th>Title</th>
+                            <th>Department</th>
+                            <th>Credit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -133,10 +133,10 @@ include('includes/sidebar.php');
                         foreach($run_query as $row) {
                           ?>
                           <tr>
-                            <td><?php echo $row['1'] ?></td>
-                            <td><?php echo $row['2'] ?></td>
-                            <td><?php echo $row['3'] ?></td>
-                            <td><?php echo $row['4'] ?></td>
+                            <td><?php echo $row['course_id'] ?></td>
+                            <td><?php echo $row['title'] ?></td>
+                            <td><?php echo $row['dept_name'] ?></td>
+                            <td><?php echo $row['credit'] ?></td>
                             </td>
                         </tr> 
                         <?php
